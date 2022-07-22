@@ -1,9 +1,9 @@
 {
-	"editor.formatOnSave": false,
+	"editor.formatOnSave": true,
 	"[scss]": {
 		"editor.formatOnSave": false,
 		"editor.codeActionsOnSave": {
-			"source.fixAll.stylelint": false
+			"source.fixAll.stylelint": true
 		}
 	}
 }
