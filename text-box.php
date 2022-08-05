@@ -1,16 +1,17 @@
 <?php
+
 /**
- * Plugin Name:       Boilerplate
- * Description:       Example block written with ESNext standard and JSX support – build step required.
+ * Plugin Name:       Text Box
+ * Description:       A Box of text.
  * Requires at least: 5.8
  * Requires PHP:      7.0
  * Version:           0.1.0
- * Author:            The WordPress Contributors
+ * Author:            CMiranda
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       boilerplate
+ * Text Domain:       text-box
  *
- * @package           create-block
+ * @package           plectrolab
  */
 
 /**
@@ -20,7 +21,8 @@
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_boilerplate_block_init() {
-	register_block_type( __DIR__ . '/build' );
+function plectrolab_text_box_block_init()
+{
+  register_block_type(__DIR__ . '/build');
 }
-add_action( 'init', 'create_block_boilerplate_block_init' );
+add_action('init', 'plectrolab_text_box_block_init');

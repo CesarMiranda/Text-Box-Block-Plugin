@@ -1,38 +1,77 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
-import { useBlockProps } from '@wordpress/block-editor';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+import {
+	useBlockProps,
+	RichText,
+	BlockControls,
+	InspectorControls,
+	AlignmentToolbar,
+	PanelColorSettings,
+	ContrastChecker,
+} from '@wordpress/block-editor';
 import './editor.scss';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @return {WPElement} Element to render.
- */
-export default function Edit() {
+export default function Edit( { attributes, setAttributes } ) {
+	const { text, alignment, backgroundColor, textColor } = attributes;
+	const onChangeAlignment = ( newAlignment ) => {
+		setAttributes( { alignment: newAlignment } );
+	};
+	const onChangeText = ( newText ) => {
+		setAttributes( { text: newText } );
+	};
+	const onBackgroundColorChange = ( newBgColor ) => {
+		setAttributes( { backgroundColor: newBgColor } );
+	};
+	const onTextColorChange = ( newTextColor ) => {
+		setAttributes( { textColor: newTextColor } );
+	};
+
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Boilerplate – hello from the editor!', 'boilerplate' ) }
-		</p>
+		<>
+			<InspectorControls>
+				<PanelColorSettings
+					title={ __( 'Color Settings', 'text-box' ) }
+					icon="admin-appearance"
+					initialOpen
+					disableCustomColors={ false }
+					colorSettings={ [
+						{
+							value: backgroundColor,
+							onChange: onBackgroundColorChange,
+							label: __( 'Background Color', 'text-block' ),
+						},
+						{
+							value: textColor,
+							onChange: onTextColorChange,
+							label: __( 'Text Color', 'text-block' ),
+						},
+					] }
+				>
+					<ContrastChecker
+						textColor={ textColor }
+						backgroundColor={ backgroundColor }
+					/>
+				</PanelColorSettings>
+			</InspectorControls>
+			<BlockControls>
+				<AlignmentToolbar
+					value={ alignment }
+					onChange={ onChangeAlignment }
+				/>
+			</BlockControls>
+			<RichText
+				{ ...useBlockProps( {
+					className: `text-box-align-${ alignment }`,
+					style: {
+						backgroundColor,
+						color: textColor,
+					},
+				} ) }
+				onChange={ onChangeText }
+				value={ text }
+				placeholder={ __( 'Your Text', 'text-block' ) }
+				tagName="h4"
+				allowedFormats={ [] }
+			/>
+		</>
 	);
 }

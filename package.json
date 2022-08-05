@@ -38,6 +38,7 @@
 	"dependencies": {
 		"@wordpress/block-editor": "^9.5.0",
 		"@wordpress/blocks": "^11.12.0",
+		"@wordpress/components": "^19.16.0",
 		"@wordpress/i18n": "^4.13.0"
 	}
 }
